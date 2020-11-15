@@ -1,22 +1,36 @@
 #include <stdio.h>
 #include <string.h>
 
+struct OrderTime
+{
+    int year,month,date,hour,min,sec;
+    char form[3];
+};
 
-char menuName[100][255];
-int menuPrice[100];
+struct pesanDrink
+{
+    char menuName[255];
+    int menuPrice;
+    char typeMenu[255];
+    char menuSize[2];
+    char menuFlavor[50];
+    int drinkTime;
+    OrderTime orderTime;
+};
+
 int currentMenu = 1;
-char typeMenu[100][255];
-char menuSize[100][2];
-char menuFlavor[100][50];
+
+pesanDrink orderDrink[105];
 
 void addDrink();
 
 void addDrink(){
-    strcpy(typeMenu[currentMenu], "Drink");
+    
+    strcpy(orderDrink[currentMenu].typeMenu, "Drink");
     char namaMenu[255], toppingDrink[255];
     int price;
     char size[2];
-
+    
     //input nama drink
     while(1)
     {
@@ -26,8 +40,8 @@ void addDrink(){
         scanf ("%[^\n]", namaMenu); getchar();
         if (strlen(namaMenu) >= 5) break;
     }
-    strcpy(menuName[currentMenu], namaMenu);
-
+    strcpy(orderDrink[currentMenu].menuName, namaMenu);
+    
     //input harga
     while(1)
     {
@@ -36,7 +50,7 @@ void addDrink(){
         scanf ("%d", &price); getchar();
         if (price >= 10 && price <= 500) break;
     }
-    menuPrice[currentMenu] = price;
+    orderDrink[currentMenu].menuPrice = price;
 
     //input flavor
     while(1)
@@ -46,7 +60,7 @@ void addDrink(){
         scanf ("%s", toppingDrink); getchar();
         if (strcmp("Mint", toppingDrink) == 0 || strcmp("Mix Berry", toppingDrink) == 0 || strcmp("Cheese", toppingDrink) == 0) break;
     }
-    strcpy(menuFlavor[currentMenu], toppingDrink);
+    strcpy(orderDrink[currentMenu].menuFlavor, toppingDrink);
 
     //input size
     while(1)
@@ -56,7 +70,7 @@ void addDrink(){
         scanf ("%s", size); getchar();
         if (strcmp("S", size) == 0 || strcmp("M", size) == 0 || strcmp("L", size)==0) break;
     }
-    strcpy(menuSize[currentMenu], size);
+    strcpy(orderDrink[currentMenu].menuSize, size);
     printf("Successfully added a new menu!");
     getchar();
     currentMenu++;
