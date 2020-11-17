@@ -75,7 +75,3 @@ void addDrink(){
     getchar();
     currentMenu++;
 }
-
-
-
-
