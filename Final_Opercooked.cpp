@@ -62,7 +62,7 @@ void addDessert();
 void addDrink();
 void pushOrder(Menu* curr); //Push tail order
 Menu* findMenu(int id); //Untuk find menu setelah input di order
-AddOrder* createNewOrder(char* name, int price, char* topping, double callories, char* flavor, char size); //Linked list OrderMenu
+AddOrder* createNewOrder(char* name, int price, char* topping, double callories, char* flavor, char size, int timeLeft); //Linked list OrderMenu
 Menu *addDessert(char *menuName, char *topping, double calories, int menuPrice, int dessertTime); //LinkedList addDessert
 void pushTailDessert(char *menuName, char *topping, double calories, int menuPrice, int dessertTime); //pushTail untuk addDessert
 
