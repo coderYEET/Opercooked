@@ -20,27 +20,19 @@ struct OrderTime
     char form[3];
 };
 
-struct pesanDessert
+struct Menu 
 {
-    char typeMenu[255];
-    char menuName[255];
-    char topping[255];
+    int id;
+    char type[10];
+    char name[255] = {};
+    int price;
+    char topping[10] = {};
     double calories;
-    int currentMenu = 1;
-    int menuPrice;
-    int dessertTime;
-};
-
-struct pesanDrink
-{
-    char menuName[255];
-    int menuPrice;
-    char typeMenu[255];
-    char menuSize[2];
-    char menuFlavor[50];
-    int drinkTime;
-    struct OrderTime orderTime;
-};
+    char flavor[15] = {};
+    char size;
+    int time;
+    Menu *next;
+}*headMenu, *tailMenu;
 
 struct histdessert
 {
@@ -74,12 +66,108 @@ char menuSize[100][3];
 char menuFlavor[100][50];
 double calories[100];
 int menuPrice[100];
-struct pesanDessert orderDessert[105];
-struct pesanDrink orderDrink[100];
 struct histdessert historyDessert[105];
 struct histdrink historyDrink[105];
-struct pesanDessert orderDessert[105];
-struct pesanDrink orderDrink[105];
+
+//LinkedList addDrink
+Menu* createNewDrink(char *menuName, char *flavor, char size, int menuPrice, int time)
+{
+    Menu* newDrink = (Menu*)malloc(sizeof(Menu));
+
+    newDrink->ID = currentMenu;
+    strcpy(newDrink->type, "Drink");
+    strcpy(newDrink->name, menuName);
+    strcpy(newDrink->flavor, flavor);
+    newDrink->size = size;
+    newDrink->price = menuPrice;
+    newDrink->time = time;
+    newDrink->next = NULL;
+
+    return newDrink;
+}
+
+//pushTail addDrink
+void pushTailAddDrink(char *menuName, char *flavor, char size, int menuPrice, int time)
+{
+    Menu* temp = createNewDrink(menuName, flavor, size, menuPrice, time);
+    if (!headMenu)
+    {
+        headMenu = tailMenu = temp;
+    }
+    else
+    {
+        tailMenu->next = temp;
+        tailMenu = temp;
+    }
+}
+
+void addDrink()
+{
+    system("cls");
+    char namaMenu[255], flavor[255];
+    int price;
+    char size;
+
+    //input nama drink
+    do
+    {
+        printf("Input the name [at least 5 characters]: ");
+        scanf("%[^\n]", namaMenu);
+        getchar();
+    } while (strlen(namaMenu) < 5);
+
+    //input harga
+    do
+    {
+        printf("Input the price [10 - 500]: $ ");
+        scanf("%d", &price);
+        getchar();
+    } while (price < 10 || price > 500);
+
+    //input flavor
+    int flag = 0;
+    do
+    {
+        printf("Input the flavor ['Mint' | 'Mix Berry' | 'Cheese'](Case Sensitive): ");
+        scanf("%[^\n]", flavor);
+        getchar();
+        if (strcmp("Mint", flavor) == 0 || strcmp("Mix Berry", flavor) == 0 || strcmp("Cheese", flavor) == 0)
+        {
+            flag = 1;
+        }
+    } while (flag == 0);
+
+    //input size 
+    flag = 0;
+    do
+    {
+        printf("Insert the size [S | M | L](Case Sensitive): ");
+        scanf("%c", &size);
+        getchar();
+        if (size == 'S' || size == 'M' || size == 'L')
+        {
+            flag = 1;
+        }
+    } while (flag == 0);
+    
+    // time
+    srand(time(0));
+    int time = (rand() % 41) + 10;
+    if (strcmp(flavor, "Mint") == 0){
+        time += 10;
+    }
+    else if(strcmp(flavor, "Mix Berry") == 0){
+        time += 20;
+    }
+    else if(strcmp(flavor, "Cheese") == 0){
+        time += 30;
+    }
+
+    printf("Successfully added a new menu!");
+    getchar();
+    pushTailAddDrink(namaMenu, flavor, size, price, time);
+    currentMenu++;
+}
 
 int main() {
 
