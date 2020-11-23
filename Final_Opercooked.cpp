@@ -20,29 +20,19 @@ struct OrderTime
     char form[3];
 };
 
-struct pesanDessert
+struct Menu
 {
-    int ID;
-    char typeMenu[255];
-    char menuName[255];
-    char topping[255];
-    double calories;
-    int menuPrice;
-    int dessertTime;
-    struct OrderTime orderTime;
-    pesanDessert *Next;
-} * head, *tail, *curr;
-
-struct pesanDrink
-{
-    char menuName[255];
-    int menuPrice;
-    char typeMenu[255];
-    char menuSize[2];
-    char menuFlavor[50];
-    int drinkTime;
-    struct OrderTime orderTime;
-};
+    int id;
+    char type[10];
+    char name[255] = {};
+    int price;
+    char topping[10] = {};
+    double callories;
+    char flavor[15] = {};
+    char size;
+    int time;
+    Menu *next;
+} * menuHead, *menuTail;
 
 struct histdessert
 {
@@ -63,8 +53,7 @@ struct histdrink
 };
 
 //global variables or structures
-int profit = 0;
-int currentMenu = 1;
+int currentMenu = 1, profit = 0;
 int totalDessert = 1;
 int totalDrink = 1;
 int totalHDessert = 0;
@@ -76,40 +65,37 @@ char menuSize[100][3];
 char menuFlavor[100][50];
 double calories[100];
 int menuPrice[100];
-struct pesanDrink orderDrink[100];
 struct histdessert historyDessert[105];
 struct histdrink historyDrink[105];
-struct pesanDessert orderDessert[105];
-struct pesanDrink orderDrink[105];
 
 //LinkList addDessert
-pesanDessert *addDessert(char *menuName, char *topping, double calories, int menuPrice, int dessertTime)
+Menu *addDessert(char *menuName, char *topping, double callories, int menuPrice, int dessertTime)
 {
-    pesanDessert *newDessert = (pesanDessert *)malloc(sizeof(pesanDessert));
+    Menu *newDessert = (Menu *)malloc(sizeof(Menu));
 
-    newDessert->ID = currentMenu;
-    strcpy(newDessert->typeMenu, "Dessert");
-    strcpy(newDessert->menuName, menuName);
+    newDessert->id = currentMenu;
+    strcpy(newDessert->type, "Dessert");
+    strcpy(newDessert->name, menuName);
     strcpy(newDessert->topping, topping);
-    newDessert->calories = calories;
-    newDessert->menuPrice = menuPrice;
-    newDessert->dessertTime = dessertTime;
-    newDessert->Next = NULL;
+    newDessert->callories = callories;
+    newDessert->price = menuPrice;
+    newDessert->time = dessertTime;
+    newDessert->next = NULL;
 
     return newDessert;
 }
 //pushTail untuk addDessert
-void pushTail(char *menuName, char *topping, double calories, int menuPrice, int dessertTime)
+void pushTailDessert(char *menuName, char *topping, double callories, int menuPrice, int dessertTime)
 {
-    pesanDessert *temp = addDessert(menuName, topping, calories, menuPrice, dessertTime);
-    if (!head)
+    Menu *temp = addDessert(menuName, topping, callories, menuPrice, dessertTime);
+    if (!menuHead)
     {
-        head = tail = temp;
+        menuHead = menuTail = temp;
     }
     else
     {
-        tail->Next = temp;
-        tail = temp;
+        menuTail->next = temp;
+        menuTail = temp;
     }
 }
 
@@ -201,7 +187,7 @@ void addMenu()
 
 void addDessert()
 {
-    char namaMenu[255], toppingMenu[255];
+    char namaMenu[255], toppingMenu[10];
     int price;
     double calorie;
 
@@ -247,7 +233,7 @@ void addDessert()
     //Mencari dessertTime
     //random waktu pembuatan dessert
     srand(time(0));
-    int totaltime = (rand() % 40) + 50;
+    int totaltime = (rand() % 41) + 50;
 
     if (strcmp(toppingMenu, "Caramel") == 0)
     {
@@ -263,10 +249,9 @@ void addDessert()
     }
 
     //create data dari inputan
-    pushTail(namaMenu, toppingMenu, calorie, price, totaltime);
+    pushTailDessert(namaMenu, toppingMenu, calorie, price, totaltime);
     printf("\nSuccessfully added a new menu!");
     getchar();
-
     currentMenu++;
 }
 
