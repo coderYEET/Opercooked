@@ -27,7 +27,7 @@ struct Menu
     char name[255] = {};
     int price;
     char topping[10] = {};
-    double callories;
+    double calories;
     char flavor[15] = {};
     char size;
     int time;
@@ -69,7 +69,7 @@ struct histdessert historyDessert[105];
 struct histdrink historyDrink[105];
 
 //LinkList addDessert
-Menu *addDessert(char *menuName, char *topping, double callories, int menuPrice, int dessertTime)
+Menu *addDessert(char *menuName, char *topping, double calories, int menuPrice, int dessertTime)
 {
     Menu *newDessert = (Menu *)malloc(sizeof(Menu));
 
@@ -77,7 +77,7 @@ Menu *addDessert(char *menuName, char *topping, double callories, int menuPrice,
     strcpy(newDessert->type, "Dessert");
     strcpy(newDessert->name, menuName);
     strcpy(newDessert->topping, topping);
-    newDessert->callories = callories;
+    newDessert->calories = calories;
     newDessert->price = menuPrice;
     newDessert->time = dessertTime;
     newDessert->next = NULL;
@@ -85,9 +85,9 @@ Menu *addDessert(char *menuName, char *topping, double callories, int menuPrice,
     return newDessert;
 }
 //pushTail untuk addDessert
-void pushTailDessert(char *menuName, char *topping, double callories, int menuPrice, int dessertTime)
+void pushTailDessert(char *menuName, char *topping, double calories, int menuPrice, int dessertTime)
 {
-    Menu *temp = addDessert(menuName, topping, callories, menuPrice, dessertTime);
+    Menu *temp = addDessert(menuName, topping, calories, menuPrice, dessertTime);
     if (!menuHead)
     {
         menuHead = menuTail = temp;
@@ -189,7 +189,7 @@ void addDessert()
 {
     char namaMenu[255], toppingMenu[10];
     int price;
-    double calorie;
+    double calories;
 
     //input nama dessert
     do
@@ -226,9 +226,9 @@ void addDessert()
     do
     {
         printf("Insert calories [1.00 - 99.00]: ");
-        scanf("%lf", &calorie);
+        scanf("%lf", &calories);
         getchar();
-    } while (calorie < 1.00 || calorie > 99.00);
+    } while (calories < 1.00 || calories > 99.00);
 
     //Mencari dessertTime
     //random waktu pembuatan dessert
@@ -249,7 +249,7 @@ void addDessert()
     }
 
     //create data dari inputan
-    pushTailDessert(namaMenu, toppingMenu, calorie, price, totaltime);
+    pushTailDessert(namaMenu, toppingMenu, calories, price, totaltime);
     printf("\nSuccessfully added a new menu!");
     getchar();
     currentMenu++;
