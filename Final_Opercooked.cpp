@@ -89,6 +89,7 @@ void mainMenu()
         puts("4. Order Dessert or Beverage");
         puts("5. Exit");
         printf(">> ");
+      
         scanf("%d", &input); getchar();
         if (input == 1)
         {
@@ -98,12 +99,12 @@ void mainMenu()
         if (input == 2)
         {
             printf("\e[1;1H\e[2J");
-            // viewCooking();
+            viewCooking();
         }
         if (input == 3)
         {
             printf("\e[1;1H\e[2J");
-            // viewOrder();
+            viewOrder();
         }
         if (input == 4)
         {
@@ -137,7 +138,7 @@ void addMenu()
         if (input == 2)
         {
             printf("\e[1;1H\e[2J");
-            // addDrink();
+            addDrink();
         }
     } while (input < 1 || input > 2);
 }
@@ -212,176 +213,176 @@ void addDessert()
     currentMenu++;
 }
 
-// void addDrink()
-// {
-//     strcpy(orderDrink[currentMenu].typeMenu, "Drink");
-//     char namaMenu[255], flavor[255];
-//     int price;
-//     char size[2];
+void addDrink()
+{
+    strcpy(orderDrink[currentMenu].typeMenu, "Drink");
+    char namaMenu[255], flavor[255];
+    int price;
+    char size[2];
 
-//     getchar();
-//     //input nama drink
-//     do
-//     {
-//         printf("Input the name [at least 5 characters]: ");
-//         scanf("%[^\n]", namaMenu);
-//         getchar();
-//     } while (strlen(namaMenu) < 5);
+    getchar();
+    //input nama drink
+    do
+    {
+        printf("Input the name [at least 5 characters]: ");
+        scanf("%[^\n]", namaMenu);
+        getchar();
+    } while (strlen(namaMenu) < 5);
 
-//     strcpy(orderDrink[currentMenu].menuName, namaMenu);
+    strcpy(orderDrink[currentMenu].menuName, namaMenu);
 
-//     //input harga
-//     do
-//     {
-//         printf("Input the price [10 - 500]: $ ");
-//         scanf("%d", &price);
-//         getchar();
-//     } while (price < 10 || price > 500);
+    //input harga
+    do
+    {
+        printf("Input the price [10 - 500]: $ ");
+        scanf("%d", &price);
+        getchar();
+    } while (price < 10 || price > 500);
 
-//     orderDrink[currentMenu].menuPrice = price;
+    orderDrink[currentMenu].menuPrice = price;
 
-//     //input flavor
-//     int flag = 0;
-//     do
-//     {
-//         printf("Input the flavor ['Mint' | 'Mix Berry' | 'Cheese'](Case Sensitive): ");
-//         scanf("%s", flavor);
-//         getchar();
-//         if (strcmp("Mint", flavor) == 0 || strcmp("Mix Berry", flavor) == 0 || strcmp("Cheese", flavor) == 0)
-//         {
-//             flag = 1;
-//         }
-//     } while (flag == 0);
-//     strcpy(orderDrink[currentMenu].menuFlavor, flavor);
+    //input flavor
+    int flag = 0;
+    do
+    {
+        printf("Input the flavor ['Mint' | 'Mix Berry' | 'Cheese'](Case Sensitive): ");
+        scanf("%s", flavor);
+        getchar();
+        if (strcmp("Mint", flavor) == 0 || strcmp("Mix Berry", flavor) == 0 || strcmp("Cheese", flavor) == 0)
+        {
+            flag = 1;
+        }
+    } while (flag == 0);
+    strcpy(orderDrink[currentMenu].menuFlavor, flavor);
 
-//     //input size
-//     flag = 0;
-//     do
-//     {
-//         printf("Insert the size [S | M | L](Case Sensitive): ");
-//         scanf("%s", size);
-//         getchar();
-//         if (strcmp("S", size) == 0 || strcmp("M", size) == 0 || strcmp("L", size) == 0)
-//         {
-//             flag = 1;
-//         }
-//     } while (flag == 0);
+    //input size
+    flag = 0;
+    do
+    {
+        printf("Insert the size [S | M | L](Case Sensitive): ");
+        scanf("%s", size);
+        getchar();
+        if (strcmp("S", size) == 0 || strcmp("M", size) == 0 || strcmp("L", size) == 0)
+        {
+            flag = 1;
+        }
+    } while (flag == 0);
 
-//     strcpy(orderDrink[currentMenu].menuSize, size);
+    strcpy(orderDrink[currentMenu].menuSize, size);
 
-//     orderDrink[currentMenu].drinkTime = (rand() % 41) + 10;
-//     if (strcmp(flavor, "Mint") == 0)
-//     {
-//         orderDrink[currentMenu].drinkTime += 10;
-//     }
-//     else if (strcmp(flavor, "Mix Berry") == 0)
-//     {
-//         orderDrink[currentMenu].drinkTime += 20;
-//     }
-//     else if (strcmp(flavor, "Cheese") == 0)
-//     {
-//         orderDrink[currentMenu].drinkTime += 30;
-//     }
+    orderDrink[currentMenu].drinkTime = (rand() % 41) + 10;
+    if (strcmp(flavor, "Mint") == 0)
+    {
+        orderDrink[currentMenu].drinkTime += 10;
+    }
+    else if (strcmp(flavor, "Mix Berry") == 0)
+    {
+        orderDrink[currentMenu].drinkTime += 20;
+    }
+    else if (strcmp(flavor, "Cheese") == 0)
+    {
+        orderDrink[currentMenu].drinkTime += 30;
+    }
 
-//     printf("Successfully added a new menu!");
-//     getchar();
-//     currentMenu++;
-// }
+    printf("Successfully added a new menu!");
+    getchar();
+    currentMenu++;
+}
 
-// void viewCooking()
-// {
-//     printf("| No  | Type     | Name   | Price  | Time Left |\n--------------------------------------------------------------\n");
-//     int list = 1;
-//     ///////////////////////////////////////////////////////////////////
-//     for (int i = 1; i <= totalDessert; ++i)
-//     {
-//         if (orderDessert[i].dessertTime <= 0)
-//             continue;
-//         orderDessert[i].dessertTime -= 10;
-//         if (orderDessert[i].dessertTime <= 0)
-//         {
-//             //Pindahin data ke struct history
-//             strcpy(historyDessert[totalHDessert].name, orderDessert[i].menuName);
-//             strcpy(historyDessert[totalHDessert].topping, orderDessert[i].topping);
-//             historyDessert[totalHDessert].callories = orderDessert[i].calories;
-//             historyDessert[totalHDessert].price = orderDessert[i].menuPrice;
-//             profit += orderDessert[i].menuPrice;
-//             //Tambahin order time tapi belum ada
-//         }
-//     }
+void viewCooking()
+{
+    printf("| No  | Type     | Name   | Price  | Time Left |\n--------------------------------------------------------------\n");
+    int list = 1;
+    ///////////////////////////////////////////////////////////////////
+    for (int i = 1; i <= totalDessert; ++i)
+    {
+        if (orderDessert[i].dessertTime <= 0)
+            continue;
+        orderDessert[i].dessertTime -= 10;
+        if (orderDessert[i].dessertTime <= 0)
+        {
+            //Pindahin data ke struct history
+            strcpy(historyDessert[totalHDessert].name, orderDessert[i].menuName);
+            strcpy(historyDessert[totalHDessert].topping, orderDessert[i].topping);
+            historyDessert[totalHDessert].callories = orderDessert[i].calories;
+            historyDessert[totalHDessert].price = orderDessert[i].menuPrice;
+            profit += orderDessert[i].menuPrice;
+            //Tambahin order time tapi belum ada
+        }
+    }
 
-//     for (int i = 1; i <= totalDrink; ++i)
-//     {
-//         if (orderDrink[i].drinkTime <= 0)
-//             continue;
-//         orderDrink[i].drinkTime -= 10;
-//         if (orderDrink[i].drinkTime <= 0)
-//         {
-//             //Pindahin data ke struct history
-//             strcpy(historyDrink[totalHDrink].name, orderDrink[i].menuName);
-//             strcpy(historyDrink[totalHDrink].size, orderDrink[i].menuSize);
-//             strcpy(historyDrink[totalHDrink].flavor, orderDrink[i].menuFlavor);
-//             historyDrink[totalHDrink].price = orderDrink[i].menuPrice;
-//             profit += orderDrink[i].menuPrice;
-//             //Tambahin order time tapi belum ada
-//         }
-//     }
-//     ///////////////////////////////////////////////////////////////////
-//     printf("\t\tDISPLAY MENU\n\n");
-//     int idx = 1;
-//     //print data dessert
-//     while (idx <= totalDessert)
-//     {
-//         if (orderDessert->dessertTime > 0)
-//         {
-//             printf(" %-4d| %-9s| %-21s| %-7d| %-10d\n", list, "Dessert", orderDessert[idx].menuName, orderDessert->menuPrice, orderDessert->dessertTime);
-//             list++;
-//         }
-//     }
-//     idx = 1;
-//     //print data drink
-//     while (idx <= totalDrink)
-//     {
-//         if (orderDrink->drinkTime > 0)
-//         {
-//             printf(" %-4d| %-9s| %-21s| %-7d| %-10d\n", list, "Drink", orderDrink[idx].menuName, orderDrink->menuPrice, orderDrink->drinkTime);
-//             list++;
-//         }
-//     }
-//     printf("Press Enter to return main menu");
-//     getchar();
-//     //input function mainmenu nya
-// }
+    for (int i = 1; i <= totalDrink; ++i)
+    {
+        if (orderDrink[i].drinkTime <= 0)
+            continue;
+        orderDrink[i].drinkTime -= 10;
+        if (orderDrink[i].drinkTime <= 0)
+        {
+            //Pindahin data ke struct history
+            strcpy(historyDrink[totalHDrink].name, orderDrink[i].menuName);
+            strcpy(historyDrink[totalHDrink].size, orderDrink[i].menuSize);
+            strcpy(historyDrink[totalHDrink].flavor, orderDrink[i].menuFlavor);
+            historyDrink[totalHDrink].price = orderDrink[i].menuPrice;
+            profit += orderDrink[i].menuPrice;
+            //Tambahin order time tapi belum ada
+        }
+    }
+    ///////////////////////////////////////////////////////////////////
+    printf("\t\tDISPLAY MENU\n\n");
+    int idx = 1;
+    //print data dessert
+    while (idx <= totalDessert)
+    {
+        if (orderDessert->dessertTime > 0)
+        {
+            printf(" %-4d| %-9s| %-21s| %-7d| %-10d\n", list, "Dessert", orderDessert[idx].menuName, orderDessert->menuPrice, orderDessert->dessertTime);
+            list++;
+        }
+    }
+    idx = 1;
+    //print data drink
+    while (idx <= totalDrink)
+    {
+        if (orderDrink->drinkTime > 0)
+        {
+            printf(" %-4d| %-9s| %-21s| %-7d| %-10d\n", list, "Drink", orderDrink[idx].menuName, orderDrink->menuPrice, orderDrink->drinkTime);
+            list++;
+        }
+    }
+    printf("Press Enter to return main menu");
+    getchar();
+    //input function mainmenu nya
+}
 
-// void viewOrder()
-// {
-//     if (totalHDessert || totalHDrink)
-//     {
-//         puts("| No  | Name                  | Price  | Topping    | Callories  | Flavor     | size  | Order Time              |");
-//         puts("-----------------------------------------------------------------------------------------------------------------");
-//         for (int i = 0; i < totalHDessert; i++)
-//         {
-//             printf("| %-3d | %-21s | %-6d | %-10s | %-10.2lf | %-10s | %-5c | %d/%02d/%02d %02d:%02d:%02d %s |\n", i + 1,
-//                    historyDessert[i].name, historyDessert[i].price, historyDessert[i].topping, historyDessert[i].callories, "-", "-",
-//                    orderDessert[i].orderTime.year, orderDessert[i].orderTime.month, orderDessert[i].date,
-//                    orderDessert[i].orderTime.hour, orderDessert[i].orderTime.min, orderDessert[i].orderTime.sec, orderDessert[i].orderTime.form);
-//         }
-//         for (int i = 0; i < totalHDrink; i++)
-//         {
-//             printf("| %-3d | %-21s | %-6d | %-10s | %-10.2lf | %-10s | %-5c | %d/%02d/%02d %02d:%02d:%02d %s |\n", i + totalHDessert + 1,
-//                    historyDrink[i].name, historyDrink[i].price, "-", "-", historyDrink[i].flavor, historyDrink[i].size,
-//                    orderDrink[i].orderTime.year, orderDrink[i].orderTime.month, orderDrink[i].date,
-//                    orderDrink[i].orderTime.hour, orderDrink[i].orderTime.min, orderDrink[i].orderTime.sec, orderDrink[i].orderTime.form);
-//         }
-//     }
-//     else
-//     {
-//         puts("There is no order history!");
-//         puts("");
-//         puts("Press enter to continue");
-//     }
-//     getchar();
-// }
+void viewOrder()
+{
+    if (totalHDessert || totalHDrink)
+    {
+        puts("| No  | Name                  | Price  | Topping    | Callories  | Flavor     | size  | Order Time              |");
+        puts("-----------------------------------------------------------------------------------------------------------------");
+        for (int i = 0; i < totalHDessert; i++)
+        {
+            printf("| %-3d | %-21s | %-6d | %-10s | %-10.2lf | %-10s | %-5c | %d/%02d/%02d %02d:%02d:%02d %s |\n", i + 1,
+                   historyDessert[i].name, historyDessert[i].price, historyDessert[i].topping, historyDessert[i].callories, "-", "-",
+                   orderDessert[i].orderTime.year, orderDessert[i].orderTime.month, orderDessert[i].date,
+                   orderDessert[i].orderTime.hour, orderDessert[i].orderTime.min, orderDessert[i].orderTime.sec, orderDessert[i].orderTime.form);
+        }
+        for (int i = 0; i < totalHDrink; i++)
+        {
+            printf("| %-3d | %-21s | %-6d | %-10s | %-10.2lf | %-10s | %-5c | %d/%02d/%02d %02d:%02d:%02d %s |\n", i + totalHDessert + 1,
+                   historyDrink[i].name, historyDrink[i].price, "-", "-", historyDrink[i].flavor, historyDrink[i].size,
+                   orderDrink[i].orderTime.year, orderDrink[i].orderTime.month, orderDrink[i].date,
+                   orderDrink[i].orderTime.hour, orderDrink[i].orderTime.min, orderDrink[i].orderTime.sec, orderDrink[i].orderTime.form);
+        }
+    }
+    else
+    {
+        puts("There is no order history!");
+        puts("");
+        puts("Press enter to continue");
+    }
+    getchar();
+}
 
 void order() {
     system("cls");
