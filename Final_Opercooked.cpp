@@ -64,8 +64,9 @@ void pushOrder(Menu* curr); //Push tail order
 Menu* findMenu(int id); //Untuk find menu setelah input di order
 AddOrder* createNewOrder(char* name, int price, char* topping, double callories, char* flavor, char size, int timeLeft); //Linked list OrderMenu
 Menu *addDessert(char *menuName, char *topping, double calories, int menuPrice, int dessertTime); //LinkedList addDessert
+Menu* createNewDrink(char *menuName, char *flavor, char size, int menuPrice, int time)//LinkedList addDrink 
 void pushTailDessert(char *menuName, char *topping, double calories, int menuPrice, int dessertTime); //pushTail untuk addDessert
-
+void pushTailAddDrink(char *menuName, char *flavor, char size, int menuPrice, int time)//pushTail addDrink
 int main()
 {
 
@@ -215,12 +216,11 @@ void addDessert()
 
 void addDrink()
 {
-    strcpy(orderDrink[currentMenu].typeMenu, "Drink");
+    system("cls");
     char namaMenu[255], flavor[255];
     int price;
-    char size[2];
+    char size;
 
-    getchar();
     //input nama drink
     do
     {
@@ -228,8 +228,6 @@ void addDrink()
         scanf("%[^\n]", namaMenu);
         getchar();
     } while (strlen(namaMenu) < 5);
-
-    strcpy(orderDrink[currentMenu].menuName, namaMenu);
 
     //input harga
     do
@@ -239,53 +237,48 @@ void addDrink()
         getchar();
     } while (price < 10 || price > 500);
 
-    orderDrink[currentMenu].menuPrice = price;
-
     //input flavor
     int flag = 0;
     do
     {
         printf("Input the flavor ['Mint' | 'Mix Berry' | 'Cheese'](Case Sensitive): ");
-        scanf("%s", flavor);
+        scanf("%[^\n]", flavor);
         getchar();
         if (strcmp("Mint", flavor) == 0 || strcmp("Mix Berry", flavor) == 0 || strcmp("Cheese", flavor) == 0)
         {
             flag = 1;
         }
     } while (flag == 0);
-    strcpy(orderDrink[currentMenu].menuFlavor, flavor);
 
-    //input size
+    //input size 
     flag = 0;
     do
     {
         printf("Insert the size [S | M | L](Case Sensitive): ");
-        scanf("%s", size);
+        scanf("%c", &size);
         getchar();
-        if (strcmp("S", size) == 0 || strcmp("M", size) == 0 || strcmp("L", size) == 0)
+        if (size == 'S' || size == 'M' || size == 'L')
         {
             flag = 1;
         }
     } while (flag == 0);
-
-    strcpy(orderDrink[currentMenu].menuSize, size);
-
-    orderDrink[currentMenu].drinkTime = (rand() % 41) + 10;
-    if (strcmp(flavor, "Mint") == 0)
-    {
-        orderDrink[currentMenu].drinkTime += 10;
+    
+    // time
+    srand(time(0));
+    int time = (rand() % 41) + 10;
+    if (strcmp(flavor, "Mint") == 0){
+        time += 10;
     }
-    else if (strcmp(flavor, "Mix Berry") == 0)
-    {
-        orderDrink[currentMenu].drinkTime += 20;
+    else if(strcmp(flavor, "Mix Berry") == 0){
+        time += 20;
     }
-    else if (strcmp(flavor, "Cheese") == 0)
-    {
-        orderDrink[currentMenu].drinkTime += 30;
+    else if(strcmp(flavor, "Cheese") == 0){
+        time += 30;
     }
 
     printf("Successfully added a new menu!");
     getchar();
+    pushTailAddDrink(namaMenu, flavor, size, price, time);
     currentMenu++;
 }
 
@@ -503,6 +496,38 @@ Menu *addDessert(char *menuName, char *topping, double calories, int menuPrice, 
 void pushTailDessert(char *menuName, char *topping, double calories, int menuPrice, int dessertTime)
 {
     Menu *temp = addDessert(menuName, topping, calories, menuPrice, dessertTime);
+    if (!headMenu)
+    {
+        headMenu = tailMenu = temp;
+    }
+    else
+    {
+        tailMenu->next = temp;
+        tailMenu = temp;
+    }
+}
+
+//LinkedList addDrink
+Menu* createNewDrink(char *menuName, char *flavor, char size, int menuPrice, int time)
+{
+    Menu* newDrink = (Menu*)malloc(sizeof(Menu));
+
+    newDrink->ID = currentMenu;
+    strcpy(newDrink->type, "Drink");
+    strcpy(newDrink->name, menuName);
+    strcpy(newDrink->flavor, flavor);
+    newDrink->size = size;
+    newDrink->price = menuPrice;
+    newDrink->time = time;
+    newDrink->next = NULL;
+
+    return newDrink;
+}
+
+//pushTail addDrink
+void pushTailAddDrink(char *menuName, char *flavor, char size, int menuPrice, int time)
+{
+    Menu* temp = createNewDrink(menuName, flavor, size, menuPrice, time);
     if (!headMenu)
     {
         headMenu = tailMenu = temp;
