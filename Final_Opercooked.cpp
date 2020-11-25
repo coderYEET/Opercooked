@@ -414,6 +414,7 @@ Menu* findMenu(int id) {
 }
 void pushOrder(Menu* curr) {
     AddOrder* newOrder = createNewOrder(curr->name, curr->price, curr->topping, curr->calories, curr->flavor, curr->size, curr->time, curr->type);
+
     if (!orderHead)
         orderHead = orderTail = newOrder;
     else
@@ -422,6 +423,7 @@ void pushOrder(Menu* curr) {
         orderTail = newOrder;
     }
 }
+
 
 AddOrder* createNewOrder(char* name, int price, char* topping, double callories, char* flavor, char size, int timeLeft, char* type) {
     AddOrder* newOrder = (AddOrder*)malloc(sizeof(AddOrder));
@@ -485,7 +487,6 @@ void pushTailDessert(char *menuName, char *topping, double calories, int menuPri
 Menu* createNewDrink(char *menuName, char *flavor, char size, int menuPrice, int time)
 {
     Menu* newDrink = (Menu*)malloc(sizeof(Menu));
-
     newDrink->id = currentMenu;
     strcpy(newDrink->type, "Drink");
     strcpy(newDrink->name, menuName);
