@@ -588,7 +588,7 @@ void popAddOrder() {
     }
     else
     {
-        while(curr->next && curr->next->timeLeft >= 0)
+        while(curr->next && curr->next->timeLeft > 0)
             curr = curr->next;
 
         if (!curr->next)
@@ -596,6 +596,7 @@ void popAddOrder() {
             
         else if (curr->next == orderTail)
         {
+            orderTail = NULL;
             free(orderTail);
             orderTail = curr;
         }
